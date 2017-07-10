@@ -19,14 +19,3 @@ class Audio:
     def close(self):
         self.stream.close()
         self.controller.terminate()
-
-
-
-#stream = p.open(format=pyaudio.paFloat32,
-#                channels=1,
-#                rate=SAMPLE_RATE,
-#                output=True)
-#stream.write(waveToPlay.astype(np.float32), waveToPlay.size)
-#stream.stop_stream()
-#stream.close()
-#p.terminate()

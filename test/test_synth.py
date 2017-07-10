@@ -3,6 +3,7 @@ import unittest
 import config
 import audio
 import synth
+import numpy as np
 # import matplotlib.pyplot as plt
 
 
@@ -19,6 +20,16 @@ class TestSynth(unittest.TestCase):
     def test_sin_wave(self):
         sound = self._synth.get_sine_wave(880, 0.9)
         self.assertEqual(sound.size, 0.9 * config.SAMPLE_RATE)
+        self._playSound(sound)
+
+    def test_sin_wave_with_vibrato(self):
+        sinDuration = 1.5
+        modFreq = 7.0
+        modAmp = 3.0
+        freqSamples = np.linspace(0, sinDuration, sinDuration * config.SAMPLE_RATE)
+        freqOsc = np.sin(2.0 * np.pi * modFreq * freqSamples) * modAmp
+        sound = self._synth.get_sine_wave_with_vibrato(880, sinDuration, freqOsc)
+        self.assertEqual(sound.size, sinDuration * config.SAMPLE_RATE)
         self._playSound(sound)
 
     def test_saw_wave(self):
@@ -40,7 +51,6 @@ class TestSynth(unittest.TestCase):
         myAudio = audio.Audio()
         myAudio.play(sound)
         myAudio.close()
-
 
 
 if __name__ == '__main__':
