@@ -48,16 +48,6 @@ class Synth:
         w = signal.chirp(samples, f0=freq, t1=0.15, f1=100, method='hyperbolic', phi=0)
         return w
 
-    def add_lowpass_filter(self, samples):
-        b, a = signal.butter(3, 0.5)
-        print a
-        print b
-        zi = signal.lfilter_zi(b, a)
-        z, _ = signal.lfilter(b, a, samples, zi=zi * samples[0])
-        z2, _ = signal.lfilter(b, a, z, zi=zi * z[0])
-        y = signal.filtfilt(b, a, samples)
-        return y
-
     def get_fm_wave(self, f_carrier=220, f_mod=220, Ind_mod=1, length=1):
         sampleInc = 1.0 / config.SAMPLE_RATE
         x = np.arange(0, length, sampleInc)
@@ -66,29 +56,6 @@ class Synth:
         y = y / mx
         wavData = np.asarray(y, dtype=np.float32)
         return wavData
-
-    def mix_samples(self, a, b):
-        if len(a) < len(b):
-            c = b.copy()
-            c[:len(a)] += a
-        else:
-            c = a.copy()
-            c[:len(b)] += b
-        return c * 0.5
-
-    def ADSR(self, wave, attack, decay, sustainLevel, sustainTime, release):
-        aGain = np.linspace(0, 1.0, config.SAMPLE_RATE * attack)
-        dGain = np.linspace(1.0, sustainLevel, config.SAMPLE_RATE * decay)
-        sGain = np.linspace(sustainLevel, sustainLevel, config.SAMPLE_RATE * sustainTime)
-        rGain = np.linspace(sustainLevel, 0, config.SAMPLE_RATE * release)
-        ADSRGain = np.append(aGain, dGain)
-        ADSRGain = np.append(ADSRGain, sGain)
-        ADSRGain = np.append(ADSRGain, rGain)
-        endFillSize = wave.size - ADSRGain.size
-        fillGain = np.linspace(0, 0, endFillSize)
-        ADSRGain = np.append(ADSRGain, fillGain)
-        waveToPlay = wave * ADSRGain
-        return waveToPlay
 
     def get_noise_wave(self, min, max, duration):
         samples = np.random.uniform(min, max, duration * config.SAMPLE_RATE)
