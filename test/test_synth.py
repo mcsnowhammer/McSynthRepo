@@ -47,6 +47,31 @@ class TestSynth(unittest.TestCase):
         self.assertEqual(sound.size, 1.6 * config.SAMPLE_RATE)
         self._playSound(sound)
 
+    def test_chirp_wave(self):
+        sound = self._synth.get_chirp_wave(10000, 0.3)
+        self.assertEqual(sound.size, 0.3 * config.SAMPLE_RATE)
+        self._playSound(sound)
+        sound = self._synth.get_chirp_wave(5000, 0.3)
+        self._playSound(sound)
+        sound = self._synth.get_chirp_wave(2000, 0.4)
+        self._playSound(sound)
+        sound = self._synth.get_chirp_wave(1000, 0.5)
+        self._playSound(sound)
+        sound = self._synth.get_chirp_wave(500, 0.6)
+        self._playSound(sound)
+        sound = self._synth.get_chirp_wave(200, 1.5)
+        self._playSound(sound)
+
+    def test_sweep_poly_wave(self):
+        sound = self._synth.get_sweep_poly_wave(400, 3.0)
+        self.assertEqual(sound.size, 3.0 * config.SAMPLE_RATE)
+        self._playSound(sound)
+
+    def test_noise_wave(self):
+        sound = self._synth.get_noise_wave(-0.9, 0.2, 1.0)
+        self.assertEqual(sound.size, 1.0 * config.SAMPLE_RATE)
+        self._playSound(sound)
+
     def _playSound(self, sound):
         myAudio = audio.Audio()
         myAudio.play(sound)
