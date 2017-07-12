@@ -72,6 +72,11 @@ class TestSynth(unittest.TestCase):
         self.assertEqual(sound.size, 1.0 * config.SAMPLE_RATE)
         self._playSound(sound)
 
+    def test_fm_wave(self):
+        sound = self._synth.get_fm_wave(500,83,7, 1.5)
+        self.assertEqual(sound.size, 1.5 * config.SAMPLE_RATE)
+        self._playSound(sound)
+
     def _playSound(self, sound):
         myAudio = audio.Audio()
         myAudio.play(sound)
