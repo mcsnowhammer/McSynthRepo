@@ -180,11 +180,11 @@ saw1 = get_saw_wave(219.5, 2.0)
 saw2 = get_saw_wave(220.5, 2.0)
 sinVib = get_sine_wave(freq, sinDuration, freqOsc)
 waveToPlay = get_pwm_wave(110, 4.0, 2.0, 2.0)
-#waveToPlay = add_lowpass_filter(saw1)
+#waveToPlay = add_lowpass_filter(0.05, saw1)
 
 #waveToPlay = mix_samples(saw1, saw2)
 #waveToPlay = mix_samples(pwm, waveToPlay)
-#waveToPlay = add_lowpass_filter(waveToPlay)
+#waveToPlay = add_lowpass_filter(0.02, waveToPlay)
 #waveToPlay = mix_samples(sinVib, waveToPlay)
 
 #waveToPlay = get_fm_wave(440,83,7, 4)
