@@ -15,3 +15,5 @@ class TestFmModule(unittest.TestCase):
 
     def testFmModule(self):
         fmModule1 = fm_module.FmModule()
+        wave = fmModule1.get_osc_fm_wave(90, 45, 500.0, 0.9)
+        self._audio.play(wave)
