@@ -13,6 +13,10 @@ class TestSynth(unittest.TestCase):
         self._synth = synth.Synth()
         self._audio = audio.Audio()
 
+    def tearDown(self):
+        super(TestSynth, self).tearDown()
+        #self._audio.close()
+
     def test_pwm_wave(self):
         sound = self._synth.get_pwm_wave(110, 1.5, 0.5, 0.6)
         self.assertEqual(sound.size, 1.5 * config.SAMPLE_RATE)

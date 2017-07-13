@@ -14,9 +14,6 @@ class Audio:
             rate=config.SAMPLE_RATE,
             output=True)
 
-    def __del__(self):
-        self.close()
-
     def play(self, waveSamples):
         wave = self._envelope.smoothEdges(waveSamples)
         self._stream.write(waveSamples.astype(np.float32), wave.size)
