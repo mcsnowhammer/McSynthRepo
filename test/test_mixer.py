@@ -11,6 +11,7 @@ class TestMixer(unittest.TestCase):
         super(TestMixer, self).setUp()
         self._synth = synth.Synth()
         self._mixer = mixer.Mixer()
+        self._audio = audio.Audio()
 
     def test_mixer(self):
         saw1 = self._synth.get_saw_wave(439, 1.5)
@@ -21,9 +22,5 @@ class TestMixer(unittest.TestCase):
         mixedSound = self._mixer.mix(mixedSound, pwmSound)
         mixedSound = self._mixer.mix(mixedSound, sinSound)
         self.assertEqual(mixedSound.size, 1.5 * config.SAMPLE_RATE)
-        self._playSound(mixedSound)
+        self._audio.play(mixedSound)
 
-    def _playSound(self, sound):
-        myAudio = audio.Audio()
-        myAudio.play(sound)
-        myAudio.close()

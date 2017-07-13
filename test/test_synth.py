@@ -11,6 +11,7 @@ class TestSynth(unittest.TestCase):
     def setUp(self):
         super(TestSynth, self).setUp()
         self._synth = synth.Synth()
+        self._audio = audio.Audio()
 
     def test_pwm_wave(self):
         sound = self._synth.get_pwm_wave(110, 1.5, 0.5, 0.6)
@@ -77,10 +78,16 @@ class TestSynth(unittest.TestCase):
         self.assertEqual(sound.size, 1.5 * config.SAMPLE_RATE)
         self._playSound(sound)
 
+    def test_osc_fm_wave(self):
+        duration = 1.5
+        sound = self._synth.get_osc_fm_wave(90, 30, 10, duration)
+        self.assertEqual(sound.size, duration * config.SAMPLE_RATE)
+        self._playSound(sound)
+
     def _playSound(self, sound):
-        myAudio = audio.Audio()
-        myAudio.play(sound)
-        myAudio.close()
+        #myAudio = audio.Audio()
+        self._audio.play(sound)
+        #myAudio.close()
 
 
 if __name__ == '__main__':

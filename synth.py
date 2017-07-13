@@ -60,3 +60,9 @@ class Synth:
     def get_noise_wave(self, min, max, duration):
         samples = np.random.uniform(min, max, duration * config.SAMPLE_RATE)
         return samples
+
+    def get_osc_fm_wave(self, frequency, modFrequency, modAmp, duration):
+        x = np.arange(config.SAMPLE_RATE * duration)
+        decayAmp = np.linspace(1.0 * modAmp, 0.0, config.SAMPLE_RATE * duration)
+        y = np.sin(2 * np.pi * frequency * (x / config.SAMPLE_RATE) + decayAmp * np.sin(2 * np.pi * modFrequency * (x / config.SAMPLE_RATE)))
+        return y

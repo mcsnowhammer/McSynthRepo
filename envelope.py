@@ -18,3 +18,10 @@ class Envelope:
         ADSRGain = np.append(ADSRGain, fillGain)
         waveToPlay = wave * ADSRGain
         return waveToPlay
+
+    def smoothEdges(self, wave, nofStartSamples=100, nofEndSamples=200):
+        smoothStart = np.linspace(0.0, 1.0, nofStartSamples)
+        smoothEnd = np.linspace(1.0, 0.0, nofEndSamples)
+        wave[:nofStartSamples] *= smoothStart
+        wave[-nofEndSamples:] *= smoothEnd
+        return wave

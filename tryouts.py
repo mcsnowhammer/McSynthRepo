@@ -238,4 +238,5 @@ window.mainloop()
 # Echo effect
 # Save sounds
 # Wave display in GUI
+# Frequency display in GUI
 #*** Noise
